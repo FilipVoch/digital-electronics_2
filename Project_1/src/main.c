@@ -162,6 +162,9 @@ ISR(TIMER1_OVF_vect)
     
     char string[2];             // String for converted numbers by itoa()
 
+
+
+    
     
    // Timer settings 
    if (buttonVal == 0)
@@ -282,7 +285,7 @@ ISR(ADC_vect)
     //value = ADC;
     // Convert "value" to "string" and display it
 
-    if (channel == 0)
+   /* if (channel == 0)
     {
     value = ADC;
 
@@ -304,7 +307,52 @@ ISR(ADC_vect)
 
     channel = 0;
     }
+         // Cursors 
+     int CursorX = 0;
+     int CursorY = 0;*/
+    
+    
+//Cursors
+if (channel == 0) //osa x
+{
+value = ADC;
+if (value > 600)
+{
+CursorX++;
+lcd_gotoxy(CursorX, CursorY);
+}
+else if (value < 400)
+{
+CursorX--;
+lcd_gotoxy(CursorX, CursorY);
+}
+else
+{
+lcd_gotoxy(CursorX, CursorY);
+}
+channel = 1;
+}
 
+else if (channel == 1) //osa y
+
+{
+value = ADC;
+if (value > 600)
+{
+CursorY != CursorY;
+lcd_gotoxy(CursorX, CursorY);
+}
+else if (value < 400)
+{
+CursorY != CursorY;
+lcd_gotoxy(CursorX, CursorY);
+}
+else
+{
+lcd_gotoxy(CursorX, CursorY);
+}
+channel = 0;
+}
   
     
 }
