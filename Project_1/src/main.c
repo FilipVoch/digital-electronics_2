@@ -45,8 +45,7 @@ int main(void)
     // Initialize display
     
     lcd_init(LCD_DISP_ON);
-    lcd_gotoxy(5, 0); lcd_puts("x:");
-    lcd_gotoxy(5, 1); lcd_puts("y:");
+   
     
     GPIO_mode_input_pullup(&DDRD, JOYSTICK_SW);
     GPIO_mode_input_pullup(&DDRD, ENCODER_SW);
@@ -129,7 +128,7 @@ ISR(TIMER1_OVF_vect)
     static uint8_t buttonVal = 0;
     buttonVal = GPIO_read(&PIND, JOYSTICK_SW);
 
-    if (buttonVal == 0)
+  /*  if (buttonVal == 0)
     {
        lcd_gotoxy(5, 0); 
        lcd_puts("z:");
@@ -150,7 +149,7 @@ ISR(TIMER1_OVF_vect)
       lcd_gotoxy(5, 1); 
        lcd_puts("y:");
     }
-   
+   */
 
     
     
@@ -160,18 +159,39 @@ ISR(TIMER1_OVF_vect)
     static uint8_t tenths = 0;  // Tenths of a second
     static uint8_t seconds = 0;  // Seconds
     static uint8_t minutes = 0;  // Minutes
-    static uint8_t mocnina = 0;
+    
     char string[2];             // String for converted numbers by itoa()
 
     
+   // Timer settings 
    if (buttonVal == 0)
     {
-       seconds ++;
-       minutes ++;
+       if (CursorX = 0 && CursorY = 0 )
+      {
+        minutes = minutes + 10;
        
+      }
+       
+       else if (CursorX = 1 && CursorY = 0 )
+      {
+        minutes ++;
+       
+      } 
+       else if (CursorX = 3 && CursorY = 0 )
+      {
+        seconds = seconds + 10;
+       
+      } 
+       else if (CursorX = 4 && CursorY = 0 )
+      {
+        seconds ++;
+       
+      } 
     }
 
-    if (encodeButtVal == 0)
+    
+    // Timer start, timer user interface
+    if (encodeButtVal == 0) 
   {
        
     
