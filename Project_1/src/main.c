@@ -273,8 +273,9 @@ ISR(TIMER1_OVF_vect)
 
     }
    }
-   
-    if (minutes == 0 && seconds == 0 && tenths == 0) 
+    
+    
+    if ((minutes == 0 && seconds == 0 && tenths == 0)|| buttonValue == 0) 
     {
        on = 1;
     
