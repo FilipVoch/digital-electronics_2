@@ -159,6 +159,7 @@ ISR(TIMER1_OVF_vect)
     static uint8_t tenths = 0;  // Tenths of a second
     static uint8_t seconds = 0;  // Seconds
     static uint8_t minutes = 0;  // Minutes
+    static uint8_t on = 1; // 1 - Off, 0 - On
     
     char string[2];             // String for converted numbers by itoa()
 
@@ -193,8 +194,14 @@ ISR(TIMER1_OVF_vect)
     }
 
     
-    // Timer start, timer user interface
+        
     if (encodeButtVal == 0) 
+    {
+       on = 0;
+    
+    }    
+    // Timer start, timer user interface
+    if (on == 0) 
   {
        
     
@@ -266,6 +273,13 @@ ISR(TIMER1_OVF_vect)
 
     }
    }
+   
+    if (minutes == 0 && seconds == 0 && tenths == 0) 
+    {
+       on = 1;
+    
+    }
+    
 }
 
 /**********************************************************************
