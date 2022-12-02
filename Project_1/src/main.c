@@ -71,10 +71,6 @@ int main(void)
 
     
 
-    // Select input channel ADC1 (voltage divider pin)
-    //ADMUX |= ((1 << MUX0) | (0 << MUX1) | (0 << MUX2) | (0 << MUX3));
-    
-
     // Configure 16-bit Timer/Counter1 to start ADC conversion
     // Set prescaler to 33 ms and enable overflow interrupt
     TIM1_overflow_33ms();
