@@ -46,6 +46,7 @@ int main(void)
     
     lcd_init(LCD_DISP_ON);
    
+    //Configure digital inputs
     
     GPIO_mode_input_pullup(&DDRD, JOYSTICK_SW);
     GPIO_mode_input_pullup(&DDRD, ENCODER_SW);
@@ -54,12 +55,12 @@ int main(void)
     GPIO_mode_input_nopull(&DDRB, ENCODER_B);
 
 
-    // Configure Analog-to-Digital Convertion unit
+    // Configure Analog-to-Digital Conversion unit
     // Select ADC voltage reference to "AVcc with external capacitor at AREF pin"
     ADMUX |= (1 << REFS0);
     ADMUX &= ~(1 << REFS1);
 
-    // Select input channel ADC0 (voltage divider pin)
+    
    
     // Enable ADC module
     ADCSRA |= (1 << ADEN);
@@ -70,7 +71,7 @@ int main(void)
 
     
 
-   // Select input channel ADC1 (voltage divider pin)
+    // Select input channel ADC1 (voltage divider pin)
     //ADMUX |= ((1 << MUX0) | (0 << MUX1) | (0 << MUX2) | (0 << MUX3));
     
 
@@ -101,7 +102,7 @@ int main(void)
  **********************************************************************/
 ISR(TIMER1_OVF_vect)
 {
-   // ADC
+   // ADC - reading input from two channels
    static uint8_t channel = 0;
    if (channel == 0)
    {
@@ -120,15 +121,17 @@ ISR(TIMER1_OVF_vect)
 
 
 
-    // Switche
+    // Switch definitions
 
     static uint8_t encodeButtVal = 0;
     encodeButtVal = GPIO_read(&PIND, ENCODER_SW);
 
     static uint8_t buttonVal = 0;
     buttonVal = GPIO_read(&PIND, JOYSTICK_SW);
+    
+    //Switch test
 
-  /*  if (buttonVal == 0)
+    /*if (buttonVal == 0)
     {
        lcd_gotoxy(5, 0); 
        lcd_puts("z:");
@@ -168,6 +171,7 @@ ISR(TIMER1_OVF_vect)
     
     
    // Timer settings 
+    
    if (buttonVal == 0)
     {
        if (CursorX = 0 && CursorY = 0 )
@@ -194,13 +198,16 @@ ISR(TIMER1_OVF_vect)
     }
 
     
-        
+    // Timer start, timer user interface
+    
+    
     if (encodeButtVal == 0) 
     {
-       on = 0;
-    
+       on = 0;    
     }    
-    // Timer start, timer user interface
+    
+    
+   
     if (on == 0) 
   {
        
@@ -277,29 +284,27 @@ ISR(TIMER1_OVF_vect)
     
     if ((minutes == 0 && seconds == 0 && tenths == 0)|| (encodeButtValue == 0 && buttonVal == 0)) 
     {
-       on = 1;
-    
+       on = 1;    
     }
     
 }
 
+
 /**********************************************************************
  * Function: ADC complete interrupt
- * Purpose:  Display converted value on LCD screen.
+ * Purpose:  Move with cursor on LCD screen.
  **********************************************************************/
 ISR(ADC_vect)
 {
-   static uint8_t channel = 0;
+    static uint8_t channel = 0;
     uint16_t value;
    
     char string[4];  // String for converted numbers by itoa()
 
-    // Read converted value
-    // Note that, register pair ADCH and ADCL can be read as a 16-bit value ADC
     
-    //value = ADC;
-    // Convert "value" to "string" and display it
-
+   // ADC Test
+    
+    
    /* if (channel == 0)
     {
     value = ADC;
@@ -328,57 +333,57 @@ ISR(ADC_vect)
     
     
 //Cursors
-int CursorX = 0;
-int CursorY = 0;
+   int CursorX = 0;
+   int CursorY = 0;
 
-if (channel == 0) //osa x
-{
-value = ADC;
-if (value > 600)
-{
-CursorX++;
-if (CursorX > 6)
-{
-CursorX = 0;
-}
-lcd_gotoxy(CursorX, CursorY);
-}
-else if (value < 400)
-{
-CursorX--;
-if (CursorX < 0)
-{
-CursorX = 6;
-}
-lcd_gotoxy(CursorX, CursorY);
-}
-else
-{
-lcd_gotoxy(CursorX, CursorY);
-}
-channel = 1;
-}
+   if (channel == 0) //osa x
+   {
+     value = ADC;
+     if (value > 600)
+     {
+       CursorX++;
+      if (CursorX > 6)
+      {
+        CursorX = 0;
+      }
+         
+     lcd_gotoxy(CursorX, CursorY);
+     }
+    else if (value < 400)
+    {
+      CursorX--;
+     if (CursorX < 0)
+     {
+      CursorX = 6;
+     }
+     lcd_gotoxy(CursorX, CursorY);
+    }
+    else
+    {
+     lcd_gotoxy(CursorX, CursorY);
+    }
+     channel = 1;
+   }
 
-else if (channel == 1) //osa y
-
-{
-value = ADC;
-if (value > 600)
-{
-CursorY != CursorY;
-lcd_gotoxy(CursorX, CursorY);
-}
-else if (value < 400)
-{
-CursorY != CursorY;
-lcd_gotoxy(CursorX, CursorY);
-}
-else
-{
-lcd_gotoxy(CursorX, CursorY);
-}
-channel = 0;
-}
+   else if (channel == 1) //osa y
+   {
+    value = ADC;
+     if (value > 600)
+     {
+      CursorY != CursorY;
+      lcd_gotoxy(CursorX, CursorY);
+      }
+     else if (value < 400)
+     {
+     CursorY != CursorY;
+     lcd_gotoxy(CursorX, CursorY);
+     }
+     else
+     {
+     lcd_gotoxy(CursorX, CursorY);
+     }
+     channel = 0;
+   }
   
     
 }
