@@ -24,8 +24,8 @@
 #include <lcd.h>            // Peter Fleury's LCD library
 #include <stdlib.h>         // C library. Needed for number conversions
 
-volatile uint16_t CursorX = 0;
-volatile uint16_t CursorY = 0;
+volatile uint16_t CursorX;
+volatile uint16_t CursorY;
 
 #define PD3 3          // In Arduino world, PB5 is called "13"
 #define PD2 2
@@ -331,25 +331,41 @@ ISR(ADC_vect)
     
 //Cursors
    
-   if (channel == 0) //osa x
-   {
+    if (channel == 0) //osa x
+    {
      value = ADC;
      if (value > 600)
      {
-       CursorX++;
-      if (CursorX > 6)
-      {
-        CursorX = 0;
-      }
+     CursorX++;
+     if (CursorX == 2)
+     {
+       CursorX = 3;
+     }
+     else if (CursorX == 5)
+     {
+       CursorX = 6;
+     }
+     else if (CursorX > 6)
+     {
+       CursorX = 0;
+     }
          
      lcd_gotoxy(CursorX, CursorY);
      }
     else if (value < 400)
     {
-      CursorX--;
-     if (CursorX < 0)
+     CursorX--;
+     if (CursorX == 5)
      {
-      CursorX = 6;
+       CursorX = 4;
+     }
+     else if (CursorX == 2)
+     {
+       CursorX = 1;
+     }
+     else if (CursorX < 0)
+     {
+       CursorX = 6;
      }
      lcd_gotoxy(CursorX, CursorY);
     }
@@ -359,7 +375,6 @@ ISR(ADC_vect)
     }
      channel = 1;
    }
-
    else if (channel == 1) //osa y
    {
     value = ADC;
