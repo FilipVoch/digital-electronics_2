@@ -50,7 +50,7 @@ Enkodér generuje dva obdĺžnikové signály nazývané clock (pin CLK) a data 
 
 ## Software description
 
-### Funkce TimerOVF_vect
+### Funkce Timer1OVF_vect - spuštění konverze na ADC, přepínání mezi dvěma kanály
  ```c
    static uint8_t channel = 0;
    if (channel == 0)
@@ -71,7 +71,7 @@ Enkodér generuje dva obdĺžnikové signály nazývané clock (pin CLK) a data 
    ```
 ![flowchartADMUX](https://user-images.githubusercontent.com/99683944/205927797-109ba625-1778-44eb-b8ba-52f494f3f20b.png)
 
-### Funkce ADC_vect
+### Funkce ADC_vect - definování pohybu joysticku
  ```c
     static uint8_t channel = 0;
     uint16_t value;
@@ -175,6 +175,35 @@ Enkodér generuje dva obdĺžnikové signály nazývané clock (pin CLK) a data 
 ```
 ![flowchartSetTimer](https://user-images.githubusercontent.com/99683944/205927833-6f11ed96-a3ac-4330-87e5-f5cb927f9fc3.png)
 
+### Funkce Timer v ISR(Timer1_OVF_vect)
+```c
+  no_of_overflows++;
+    if (no_of_overflows >= 3)
+    {
+        // Do this every 3 x 33 ms = 100 ms
+        no_of_overflows = 0;
+        tenths--;
+        // Count tenth of seconds 9, 8, ..., 0, 9, 8, ...
+        if (tenths = 0)
+        {
+          tenths = 9;
+          seconds--;
+
+          if (seconds = 0)
+          {
+            seconds = 59;
+            minutes--;
+            if (minutes = 0)
+            {
+              tenths = 0;
+              seconds = 0;
+              minutes = 0;
+            }
+          }
+        }
+```
+![flowchartTimerCount](https://github.com/davidhro/digital-electronics_2/blob/main/Project_1/pictures/flowchart_timer.png)
+
 
 
 
@@ -189,3 +218,4 @@ Enkodér generuje dva obdĺžnikové signály nazývané clock (pin CLK) a data 
 3. https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf
 4. https://docs.arduino.cc/resources/datasheets/A000066-datasheet.pdf
 5. https://app.code2flow.com/
+6. https://app.diagrams.net/
