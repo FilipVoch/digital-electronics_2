@@ -70,6 +70,82 @@ Enkodér generuje dva obdĺžnikové signály nazývané clock (pin CLK) a data 
 
    ```
 ![flowchartADMUX](https://user-images.githubusercontent.com/99683944/205927797-109ba625-1778-44eb-b8ba-52f494f3f20b.png)
+
+### Funkce ADC_vect
+ ```c
+    static uint8_t channel = 0;
+    uint16_t value;
+   
+    char string[4];  // String for converted numbers by itoa()
+   
+    //Cursors, defined as volatile variable
+   
+    if (channel == 0) //osa x
+    {
+     value = ADC;
+     if (value > 600)
+     {
+     CursorX++;
+     if (CursorX == 2)
+     {
+       CursorX = 3;
+     }
+     else if (CursorX == 5)
+     {
+       CursorX = 6;
+     }
+     else if (CursorX > 6)
+     {
+       CursorX = 0;
+     }
+         
+     lcd_gotoxy(CursorX, CursorY);
+     }
+    else if (value < 400)
+    {
+     CursorX--;
+     if (CursorX == 5)
+     {
+       CursorX = 4;
+     }
+     else if (CursorX == 2)
+     {
+       CursorX = 1;
+     }
+     else if (CursorX < 0)
+     {
+       CursorX = 6;
+     }
+     lcd_gotoxy(CursorX, CursorY);
+    }
+    else
+    {
+     lcd_gotoxy(CursorX, CursorY);
+    }
+     channel = 1;
+   }
+   else if (channel == 1) //osa y
+   {
+    value = ADC;
+     if (value > 600)
+     {
+      CursorY != CursorY;
+      lcd_gotoxy(CursorX, CursorY);
+      }
+     else if (value < 400)
+     {
+     CursorY != CursorY;
+     lcd_gotoxy(CursorX, CursorY);
+     }
+     else
+     {
+     lcd_gotoxy(CursorX, CursorY);
+     }
+     channel = 0;
+   }
+   ```
+![flowchartJoystick](https://github.com/davidhro/digital-electronics_2/blob/main/Project_1/pictures/flowchart_adc.png)
+
 ### Funkce SetTimer
 ```c
    if (buttonVal == 0)
@@ -112,3 +188,4 @@ Enkodér generuje dva obdĺžnikové signály nazývané clock (pin CLK) a data 
 2. https://howtomechatronics.com/tutorials/arduino/rotary-encoder-works-use-arduino/
 3. https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf
 4. https://docs.arduino.cc/resources/datasheets/A000066-datasheet.pdf
+5. https://app.code2flow.com/
