@@ -279,7 +279,7 @@ ISR(TIMER1_OVF_vect)
    }
     
     
-    if ((minutes == 0 && seconds == 0 && tenths == 0)|| (encodeButtValue == 0 && buttonVal == 0)) 
+    if ((minutes == 0 && seconds == 0 && tenths == 0)|| (encodeButtVal == 0 && buttonVal == 0)) 
     {
        on = 1;    
     }
