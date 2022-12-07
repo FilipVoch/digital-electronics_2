@@ -2,9 +2,9 @@
 
 ### Team members
 
-* David Hromas
-* Filip Voch
-* Richard Ladislav
+* David Hromas - kód, dokumentace
+* Filip Voch - kód, zapojení
+* Richard Ladislav - zapojení, dokumentace
 
 ### Table of contents
 
