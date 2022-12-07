@@ -209,7 +209,7 @@ Enkodér generuje dva obdĺžnikové signály nazývané clock (pin CLK) a data 
 
 
 ## Video
-
+[Video](https://vutbr-my.sharepoint.com/:v:/g/personal/xvochf00_vutbr_cz/EXFY6rlN41RGvUFEBSc7Hm8BtmQ-btSt9jUIAIiXKGpCxQ?e=bFebiv)
 
 ## References
 
